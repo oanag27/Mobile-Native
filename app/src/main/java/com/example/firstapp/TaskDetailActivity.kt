@@ -71,9 +71,6 @@ class TaskDetailActivity : AppCompatActivity() {
         findViewById<Button>(R.id.backToHomeButton).setOnClickListener {
             onBackPressed()
         }
-        findViewById<Button>(R.id.deleteButtonTaskDetail).setOnClickListener {
-            showDeleteConfirmationDialog(taskId)
-        }
 
     }
     private fun showDatePicker() {
