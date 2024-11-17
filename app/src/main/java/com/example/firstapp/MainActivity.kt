@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: CustomAdapter
     private val addTaskRequestCode = 1 // Request code for adding task
     private val taskDetailRequestCode = 2
+    private val taskDeleteRequestCode = 3
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +86,52 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Log.e("MainActivity", "Invalid due date received from AddActivity")
             }
+        } else if (requestCode == taskDetailRequestCode && resultCode == RESULT_OK && data != null) {
+            val updatedTaskId = data.getIntExtra("UPDATED_TASK_ID", -1)
+            val updatedTitle = data.getStringExtra("UPDATED_TASK_TITLE")
+            val updatedDescription = data.getStringExtra("UPDATED_TASK_DESCRIPTION")
+            val updatedPriority = data.getStringExtra("UPDATED_TASK_PRIORITY")
+            val updatedDate = data.getStringExtra("UPDATED_TASK_DATE")
+            val updatedCompletionStatus =
+                data.getBooleanExtra("UPDATED_TASK_COMPLETION_STATUS", false)
+
+            if (updatedTaskId != -1) {
+                val updatedTask = taskViewModel.tasks.value?.find { it.id == updatedTaskId }
+                Log.d(
+                    "TaskDetailActivity",
+                    "Returning Updated Task: ID=$taskId Title=$updatedTitle"
+                )
+                if (updatedTask != null) {
+                    // Update task details
+                    updatedTask.title = updatedTitle ?: updatedTask.title
+                    updatedTask.description = updatedDescription ?: updatedTask.description
+                    updatedTask.priority_level = updatedPriority ?: updatedTask.priority_level
+                    updatedTask.dueDate = updatedDate?.let { date ->
+                        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(date)
+                    } ?: updatedTask.dueDate
+                    updatedTask.completion_status = updatedCompletionStatus
+
+                    if (updatedTask != null) {
+                        taskViewModel.updateTask(updatedTask)
+                        adapter.notifyDataSetChanged()
+                        Log.d(
+                            "MainActivity",
+                            "Task updated: ID=${updatedTask.id}, Title=${updatedTask.title}"
+                        )
+                    } else {
+                        Log.e("MainActivity", "Task not found for ID: $updatedTaskId")
+                    }
+                }
+            }
+        }else if (requestCode == taskDeleteRequestCode && resultCode == RESULT_OK && data != null) {
+            val deletedTaskId = data.getIntExtra("DELETED_TASK_ID", -1)
+            if (deletedTaskId != -1) {
+                taskViewModel.deleteTask(deletedTaskId) // Delete the task in ViewModel
+                Log.d("MainActivity", "Task deleted: ID=$deletedTaskId")
+                taskViewModel.tasks.observe(this) { updatedTaskList ->
+                    adapter.submitList(updatedTaskList)
+                }
+            }
         }
     }
-
 }

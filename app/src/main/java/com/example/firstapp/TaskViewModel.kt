@@ -30,22 +30,17 @@ class TaskViewModel : ViewModel() {
         _tasks.value = taskList.toList()
         Log.d("TaskViewModel", "Added Task: $newTask. Total tasks: ${taskList.size}")
     }
+    fun updateTask(task: Task) {
+        val updatedTaskList = tasks.value?.map {
+            if (it.id == task.id) task else it
+        } ?: listOf(task)
 
-//    fun updateTask(updatedTask: Task) {
-//        val taskIndex = taskList.indexOfFirst { it.id == updatedTask.id }
-//        if (taskIndex != -1) {
-//            taskList[taskIndex] = updatedTask // Update the task in the list
-//            _tasks.value = taskList.toList() // Create a new list and update the LiveData
-//            Log.d("TaskViewModel", "Updated Task: $updatedTask at index $taskIndex")
-//        } else {
-//            Log.e("TaskViewModel", "Task with ID ${updatedTask.id} not found.")
-//        }
-//    }
-//    fun deleteTask(taskId: Int) {
-//        val taskToDelete = taskList.find { it.id == taskId }
-//        if (taskToDelete != null) {
-//            taskList.remove(taskToDelete) // Remove the task from the list
-//            _tasks.postValue(taskList.toList()) // Update LiveData with the new list
-//        }
-//    }
+        _tasks.value = updatedTaskList // Notify LiveData observers of the updated list
+    }
+
+    fun deleteTask(taskId: Int) {
+    // Assuming you have a LiveData or MutableLiveData of tasks
+        val updatedList = tasks.value?.filter { it.id != taskId }
+        _tasks.postValue(updatedList!!) // Update the LiveData
+    }
 }

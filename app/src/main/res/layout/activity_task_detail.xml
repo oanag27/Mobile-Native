@@ -1,6 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/backToHomeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+        android:text="Back"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"
+        android:paddingTop="50px"/>
+
+    <TextView
+        android:id="@+id/updateTaskTitleDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Update Task"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/backToHomeButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="30dp"/>
+
+    <TextView
+        android:id="@+id/taskTitleLabelDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Title"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/updateTaskTitleDetail"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"/>
+
+    <EditText
+        android:id="@+id/taskTitleEditDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter task title"
+        app:layout_constraintTop_toBottomOf="@id/taskTitleLabelDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"/>
+
+    <TextView
+        android:id="@+id/taskDescriptionLabelDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Description"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskTitleEditDetail"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"/>
+
+    <EditText
+        android:id="@+id/taskDescriptionEditDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter task description"
+        android:inputType="textMultiLine"
+        app:layout_constraintTop_toBottomOf="@id/taskDescriptionLabelDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:minHeight="100dp"
+        android:gravity="top|start" />
+
+    <TextView
+        android:id="@+id/taskPriorityLabelDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Priority"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskDescriptionEditDetail"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"/>
+
+    <EditText
+        android:id="@+id/taskPriorityEditDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter task priority"
+        app:layout_constraintTop_toBottomOf="@id/taskPriorityLabelDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"/>
+
+    <TextView
+        android:id="@+id/taskDateLabelDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Date"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskPriorityEditDetail"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"/>
+
+    <EditText
+        android:id="@+id/taskDateEditDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Optional: Select a date"
+        app:layout_constraintTop_toBottomOf="@id/taskDateLabelDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"/>
+
+    <TextView
+        android:id="@+id/completionStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Completion Status"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskDateEditDetail"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"/>
+
+    <Switch
+        android:id="@+id/completionStatusSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/completionStatusLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="30dp"/>
+
+    <Button
+        android:id="@+id/saveButtonTaskDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Task"
+        app:layout_constraintTop_toBottomOf="@id/completionStatusSwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"/>
+
+    <Button
+        android:id="@+id/deleteButtonTaskDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/saveButtonTaskDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Delete Task"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
