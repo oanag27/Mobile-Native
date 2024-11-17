@@ -35,12 +35,13 @@ class TaskViewModel : ViewModel() {
             if (it.id == task.id) task else it
         } ?: listOf(task)
 
-        _tasks.value = updatedTaskList // Notify LiveData observers of the updated list
+        _tasks.value = updatedTaskList
     }
-
     fun deleteTask(taskId: Int) {
-    // Assuming you have a LiveData or MutableLiveData of tasks
-        val updatedList = tasks.value?.filter { it.id != taskId }
-        _tasks.postValue(updatedList!!) // Update the LiveData
+        val updatedList = taskList.filter { it.id != taskId }
+        taskList.clear()
+        taskList.addAll(updatedList)
+        _tasks.value = taskList.toList()
+        Log.d("TaskViewModel", "Deleted Task ID: $taskId")
     }
 }

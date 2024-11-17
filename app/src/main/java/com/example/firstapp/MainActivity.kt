@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,10 +21,8 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
     private val taskViewModel: TaskViewModel by viewModels()
     private lateinit var adapter: CustomAdapter
-    private val addTaskRequestCode = 1 // Request code for adding task
+    private val addTaskRequestCode = 1
     private val taskDetailRequestCode = 2
-    private val taskDeleteRequestCode = 3
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,21 +30,23 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
-        adapter = CustomAdapter { task ->
-            // Pass selected task details to TaskDetailActivity
-            val intent = Intent(this, TaskDetailActivity::class.java).apply {
-                putExtra("TASK_ID", task.id)
-                putExtra("TASK_TITLE", task.title)
-                putExtra("TASK_DESCRIPTION", task.description)
-                putExtra("TASK_PRIORITY", task.priority_level)
-                putExtra(
-                    "TASK_DATE",
-                    SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(task.dueDate)
-                )
-                putExtra("TASK_COMPLETION_STATUS", task.completion_status)
+        adapter = CustomAdapter(
+            onTaskClicked = { task ->
+                showDeleteConfirmationDialog(task)
+            },
+            onDetailButtonClicked = { task ->
+                // Navigate to the task detail page for editing the task
+                val intent = Intent(this, TaskDetailActivity::class.java).apply {
+                    putExtra("TASK_ID", task.id)
+                    putExtra("TASK_TITLE", task.title)
+                    putExtra("TASK_DESCRIPTION", task.description)
+                    putExtra("TASK_PRIORITY", task.priority_level)
+                    putExtra("TASK_DATE", SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(task.dueDate))
+                    putExtra("TASK_COMPLETION_STATUS", task.completion_status)
+                }
+                startActivityForResult(intent, taskDetailRequestCode)
             }
-            startActivityForResult(intent, taskDetailRequestCode)
-        }
+        )
         recyclerView.adapter = adapter
 
         taskViewModel.tasks.observe(this) { taskList ->
@@ -58,6 +59,21 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, addTaskRequestCode)
         }
 
+    }
+    private fun showDeleteConfirmationDialog(task: Task) {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setMessage("Are you sure you want to delete this task?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialog, id ->
+                taskViewModel.deleteTask(task.id) // Call ViewModel to delete the task
+                Log.d("MainActivity", "Task deleted: ID=${task.id}")
+            }
+            .setNegativeButton("No") { dialog, id ->
+                dialog.dismiss()
+            }
+
+        val alert = dialogBuilder.create()
+        alert.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -74,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 val dueDate = Date(dueDateTimestamp)
 
                 val newTask = Task(
-                    id = 0, // Assuming your ViewModel assigns the ID
+                    id = 0,
                     title = title,
                     description = description,
                     dueDate = dueDate,
@@ -82,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                     completion_status = completionStatus
                 )
 
-                taskViewModel.addTask(newTask) // Add the task to the ViewModel
+                taskViewModel.addTask(newTask)
             } else {
                 Log.e("MainActivity", "Invalid due date received from AddActivity")
             }
@@ -121,15 +137,6 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         Log.e("MainActivity", "Task not found for ID: $updatedTaskId")
                     }
-                }
-            }
-        }else if (requestCode == taskDeleteRequestCode && resultCode == RESULT_OK && data != null) {
-            val deletedTaskId = data.getIntExtra("DELETED_TASK_ID", -1)
-            if (deletedTaskId != -1) {
-                taskViewModel.deleteTask(deletedTaskId) // Delete the task in ViewModel
-                Log.d("MainActivity", "Task deleted: ID=$deletedTaskId")
-                taskViewModel.tasks.observe(this) { updatedTaskList ->
-                    adapter.submitList(updatedTaskList)
                 }
             }
         }
