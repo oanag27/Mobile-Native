@@ -100,28 +100,5 @@ class TaskDetailActivity : AppCompatActivity() {
 
         datePickerDialog.show()
     }
-
-    private fun showDeleteConfirmationDialog(taskId: Int) {
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setMessage("Are you sure you want to delete this task?")
-            .setCancelable(false)
-            .setPositiveButton("Yes") { dialog, id ->
-                deleteTask(taskId)
-            }
-            .setNegativeButton("No") { dialog, id ->
-                dialog.dismiss() // Dismiss the dialog if "No" is clicked
-            }
-
-        val alert = dialogBuilder.create()
-        alert.show()
-    }
-
-    private fun deleteTask(taskId: Int) {
-        val resultIntent = Intent().apply {
-            putExtra("DELETED_TASK_ID", taskId)
-        }
-        setResult(RESULT_OK,resultIntent)  // Send back the task ID to MainActivity
-        finish()
-    }
 }
 
