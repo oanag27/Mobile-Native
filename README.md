@@ -1,4 +1,4 @@
-### Task Management App
+# Task Management App
 A simple Android application to create, view, edit, and manage tasks. The app uses Jetpack components like RecyclerView, ViewModel, and LiveData for efficient task handling. It demonstrates modern Android development practices, including lifecycle-aware components and clean architecture.
 
 ## Features
