@@ -20,3 +20,9 @@ Manages task data with ViewModel and observes updates using LiveData.
 4. Date Picker:
 
 Allows users to select a task's due date through an intuitive DatePickerDialog.
+
+
+## Screenshots:
+
+Main Screen
+![image](https://github.com/user-attachments/assets/7e49c611-fe33-4961-adc7-fbe8b475be56)
