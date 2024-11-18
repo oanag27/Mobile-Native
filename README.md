@@ -23,6 +23,8 @@ Allows users to select a task's due date through an intuitive DatePickerDialog.
 
 
 ## Screenshots:
+<img src="https://github.com/user-attachments/assets/7e49c611-fe33-4961-adc7-fbe8b475be56" alt="Image 1" width="300">
+<img src="https://github.com/user-attachments/assets/e42bcf4b-a817-4ab8-9273-ca27c7da5952" alt="Image 2" width="300">
+<img src="https://github.com/user-attachments/assets/0223ad54-c821-4abf-89d9-d7610769a283" alt="Image 3" width="300">
+<img src="https://github.com/user-attachments/assets/9290d1fd-41e1-4fb2-b043-67b469f92cd5" alt="Image 4" width="300">
 
-Main Screen
-![image](https://github.com/user-attachments/assets/7e49c611-fe33-4961-adc7-fbe8b475be56)
